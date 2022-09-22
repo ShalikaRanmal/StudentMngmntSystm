@@ -1,0 +1,1 @@
+{"name":"Shalika","age":28,"marks":{"Maths":95,"Sinhala":100,"English":98}}

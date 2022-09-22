@@ -1,0 +1,1 @@
+{"name":"Ranmal","age":25,"marks":{"Sinhala":32,"Maths":56,"English":42}}
