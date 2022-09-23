@@ -1,1 +1,1 @@
-{"name":"Latha","age":39,"marks":{"Sinhala":96,"English":54,"Maths":82}}
+{"name":"Latha","age":39,"marks":{"English":54,"Sinhala":96,"Maths":82}}

@@ -1,1 +1,1 @@
-{"subject_name":"Maths"}
+{"name":"Maths"}

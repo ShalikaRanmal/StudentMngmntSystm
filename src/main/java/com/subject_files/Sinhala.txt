@@ -1,1 +1,1 @@
-{"subject_name":"Sinhala"}
+{"name":"Sinhala"}

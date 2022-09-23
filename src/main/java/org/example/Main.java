@@ -3,17 +3,15 @@ package org.example;
 import com.custom_exceptions.FilesAreEmptyException;
 import com.custom_exceptions.NoSuchStudentException;
 import com.custom_exceptions.NoSuchSubjectException;
-import com.file_handlers.SbjctManger;
-import com.file_handlers.StdsMngmtSystm;
-import com.main_classes.Student;
-import com.main_classes.Subject;
+import com.file_handlers.EntityManager;
+import com.models.Entity;
+import com.models.Student;
+import com.models.Subject;
 import com.operations.Display;
 import com.operations.Grades;
 
 import java.io.IOException;
-import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Scanner;
 
 public class Main {
@@ -23,8 +21,9 @@ public class Main {
         //Path filePath = Paths.get("F:\\Java\\Projects\\testM\\target");
         Display display = new Display();
         Scanner input = new Scanner(System.in);
-        StdsMngmtSystm sms = new StdsMngmtSystm();
-        SbjctManger sm = new SbjctManger();
+        //StdsMngmtSystm sms = new StdsMngmtSystm();
+        //SbjctManger sm = new SbjctManger();
+        EntityManager em = new EntityManager();
         Grades grades = new Grades();
 
         while (true) {
@@ -36,7 +35,6 @@ public class Main {
                 display.print("4. Exit");
                 int in_1 = 0;
                 in_1 = Integer.parseInt(input.nextLine());
-
 
                 if (in_1 == 1) {
                     display.print("\nStudent Manager");
@@ -52,29 +50,39 @@ public class Main {
 
                     try {
                         if (in_1_2 == 1) {
+                            String name;
+                            int age = 0;
+                            int grade = 0;
+
                             display.print("\nAdd New Student");
                             display.print("Enter the Student Name");
-                            String name = input.nextLine();
+                            name = input.nextLine();
+
                             display.print("Enter the Student's Age");
-                            int age = 0;
-                                age = Integer.parseInt(input.nextLine());
-                            Student std = new Student(name, age);
+                            age = Integer.parseInt(input.nextLine());
+
+                            display.print("Enter the Student's Grade");
+                            grade = Integer.parseInt(input.nextLine());
+
+                            Student std = new Student(name, age, grade);
                             display.print("\nAdding a Student---------------------");
-                            sms.saveStudent(std);
+                            em.save(std);
                             continue;
+
                         } else if (in_1_2 == 2) {
                             display.print("\nRegistered Students list------------------");
-                            sms.viewStudents();
+                            em.view(new Student());
                             continue;
                         } else if (in_1_2 == 3) {
-                            ArrayList<Student> searchResult = new ArrayList<Student>();
+                            ArrayList<Entity> searchResult = new ArrayList<Entity>();
                             String name;
 
                             System.out.println("\nStudent search by name --------------------");
                             display.print("Enter name of the Student");
                             name = input.nextLine();
-                            searchResult = sms.searchByName(name);
-                            for (Student student : searchResult) {
+                            searchResult = em.searchByName(name, new Student());
+                            for (Entity student : searchResult) {
+                                student = student;
                                 System.out.println(student.toString());
                             }
                             continue;
@@ -91,11 +99,11 @@ public class Main {
                             display.print("What is marks for this subject");
                                 marks = Integer.parseInt(input.nextLine());
 
-                            Student student = sms.searchByName(name).get(0);
-                            Subject subject = sm.searchByName(sub_name);
+                            Student student =(Student) em.searchByName(name, new Student()).get(0);
+                            Subject subject =(Subject) em.searchByName(sub_name, new Subject()).get(0);
 
                             student.setMarks(subject, marks);
-                            sms.saveStudent(student);
+                            em.save(student);
                             continue;
                         } else if (in_1_2 == 5) {
                             String name;
@@ -103,7 +111,7 @@ public class Main {
                             display.print("\nSudent file deleting----------------------");
                             display.print("What is name of the student you want delete");
                             name = input.nextLine();
-                            sms.deleteStudent(name);
+                            em.delete(name, new Student());
                             continue;
                         } else if (in_1_2 == 6) {
                             continue;
@@ -117,6 +125,7 @@ public class Main {
                     display.print("1.Add a Subject");
                     display.print("2.View Subject List");
                     display.print("3.Delete a Subject");
+                    display.print("4.Back to Main Menu");
                     int in_2_2 = 0;
                         in_2_2 = Integer.parseInt(input.nextLine());
 
@@ -128,11 +137,11 @@ public class Main {
                             name = input.nextLine();
                             Subject subject = new Subject(name);
                             System.out.println("\nAdding subjects-----------------");
-                            sm.saveSubject(subject);
+                            em.save(subject);
                             continue;
                         } else if (in_2_2 == 2) {
                             display.print("\nRegisterd subjects------------------");
-                            sm.viewSubjects();
+                            em.view(new Subject());
                             continue;
                         } else if (in_2_2 == 3) {
                             String name;
@@ -140,7 +149,7 @@ public class Main {
                             System.out.println("\ndeleting a subject");
                             display.print("What is name of subject want to be deleted");
                             name = input.nextLine();
-                            sm.deleteSubject(name);
+                            em.delete(name, new Subject());
                             continue;
                         }
                     } catch (IOException e) {
@@ -159,8 +168,8 @@ public class Main {
                 }
             }catch (NumberFormatException ex) {
                 display.print("wrong input.Input was not a number");
-            }catch (NoSuchSubjectException ex){
-                display.print(ex+"..Please check again.");
+            //}catch (NoSuchSubjectException ex){
+            //    display.print(ex+"..Please check again.");
             }catch (NoSuchStudentException ex) {
                 display.print(ex.toString());
             }catch (FilesAreEmptyException ex){

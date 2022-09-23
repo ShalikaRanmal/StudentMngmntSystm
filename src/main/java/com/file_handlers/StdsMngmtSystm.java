@@ -2,7 +2,7 @@ package com.file_handlers;
 
 import com.custom_exceptions.NoSuchStudentException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.main_classes.Student;
+import com.models.Student;
 
 import java.io.File;
 import java.io.FilenameFilter;

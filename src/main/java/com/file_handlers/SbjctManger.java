@@ -2,8 +2,7 @@ package com.file_handlers;
 
 import com.custom_exceptions.NoSuchSubjectException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.main_classes.Student;
-import com.main_classes.Subject;
+import com.models.Subject;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -19,9 +18,9 @@ public class SbjctManger {
 
 
     public void saveSubject(Subject subject) throws IOException {
-        Path path = Paths.get("F:\\Java\\Projects\\testM\\src\\main\\java\\com\\subject_files\\"+subject.getSubject_name()+".txt");
+        Path path = Paths.get("F:\\Java\\Projects\\testM\\src\\main\\java\\com\\subject_files\\"+subject.getName()+".txt");
         mapper.writeValue(new File(path.toUri()),subject);
-        System.out.println("Created file for "+subject.getSubject_name()+" successfully");
+        System.out.println("Created file for "+subject.getName()+" successfully");
     }
     public ArrayList<Subject> subjectList() throws IOException {
         File folder;

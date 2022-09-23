@@ -3,8 +3,8 @@ package com.operations;
 import com.custom_exceptions.FilesAreEmptyException;
 import com.file_handlers.SbjctManger;
 import com.file_handlers.StdsMngmtSystm;
-import com.main_classes.Student;
-import com.main_classes.Subject;
+import com.models.Student;
+import com.models.Subject;
 
 import java.io.IOException;
 import java.util.*;
