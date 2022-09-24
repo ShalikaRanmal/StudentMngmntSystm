@@ -1,0 +1,1 @@
+{"name":"Kasun Wasantha","age":16,"grade":11,"marks":{"Sinhala":71,"Maths":95,"English":89}}

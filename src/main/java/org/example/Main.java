@@ -10,6 +10,7 @@ import com.models.Subject;
 import com.operations.Display;
 import com.operations.Grades;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -46,7 +47,6 @@ public class Main {
                     display.print("6.Back to main menu");
                     int in_1_2 = 0;
                     in_1_2 = Integer.parseInt(input.nextLine());
-                    display.print("wrong input.Input was not a number");
 
                     try {
                         if (in_1_2 == 1) {
@@ -99,11 +99,7 @@ public class Main {
                             display.print("What is marks for this subject");
                                 marks = Integer.parseInt(input.nextLine());
 
-                            Student student =(Student) em.searchByName(name, new Student()).get(0);
-                            Subject subject =(Subject) em.searchByName(sub_name, new Subject()).get(0);
-
-                            student.setMarks(subject, marks);
-                            em.save(student);
+                            em.addMarks(name,sub_name,marks);
                             continue;
                         } else if (in_1_2 == 5) {
                             String name;
@@ -156,9 +152,13 @@ public class Main {
                         display.print("Error " + e);
                     }
                 } else if (in_1 == 3) {
+                    int grade = 0;
+
                     display.print("Find grade-------------");
+                    display.print("In what Grade you want to know Ranks(1 to 13 grades)");
+                    grade = Integer.parseInt(input.nextLine());
                     try {
-                        grades.findGrades();
+                        grades.findGrades(grade);
                     } catch (IOException e) {
                         display.print("Error " + e);
                     }
@@ -170,7 +170,8 @@ public class Main {
                 display.print("wrong input.Input was not a number");
             //}catch (NoSuchSubjectException ex){
             //    display.print(ex+"..Please check again.");
-            }catch (NoSuchStudentException ex) {
+            }
+            catch (NoSuchStudentException ex) {
                 display.print(ex.toString());
             }catch (FilesAreEmptyException ex){
                 display.print(ex.toString());

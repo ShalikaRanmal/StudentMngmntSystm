@@ -1,1 +1,0 @@
-{"name":"Latha","age":39,"marks":{"English":54,"Sinhala":96,"Maths":82}}

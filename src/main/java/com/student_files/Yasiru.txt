@@ -1,1 +1,0 @@
-{"name":"Yasiru","age":26,"marks":{"Sinhala":98,"English":78,"Maths":74}}

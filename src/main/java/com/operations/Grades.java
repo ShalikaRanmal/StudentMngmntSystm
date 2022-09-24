@@ -1,8 +1,11 @@
 package com.operations;
 
 import com.custom_exceptions.FilesAreEmptyException;
+import com.custom_exceptions.NoSuchStudentException;
+import com.file_handlers.EntityManager;
 import com.file_handlers.SbjctManger;
 import com.file_handlers.StdsMngmtSystm;
+import com.models.Entity;
 import com.models.Student;
 import com.models.Subject;
 
@@ -11,10 +14,13 @@ import java.util.*;
 
 public class Grades implements Comparator<Student> {
     public Grades(){ }
-    StdsMngmtSystm sms = new StdsMngmtSystm();
-    SbjctManger sm = new SbjctManger();
-    ArrayList<Student> students = new ArrayList<Student>();
-    ArrayList<Subject> subjects = new ArrayList<Subject>();
+    //StdsMngmtSystm sms = new StdsMngmtSystm();
+    //SbjctManger sm = new SbjctManger();
+    EntityManager em = new EntityManager();
+
+    //ArrayList<Entity> students = new ArrayList<Entity>();
+    //ArrayList<Entity> subjects = new ArrayList<Entity>();
+
     HashMap<Student,Integer>  total_grades = new HashMap<Student,Integer>();
 
 
@@ -25,9 +31,19 @@ public class Grades implements Comparator<Student> {
         }
         return total;
     }
-    public void findGrades() throws IOException, FilesAreEmptyException {
-        students = sms.studentList();
-        subjects = sm.subjectList();
+    public void findGrades(int grade) throws IOException, FilesAreEmptyException, NoSuchStudentException {
+        //students = sms.studentList();
+        //subjects = sm.subjectList();
+        ArrayList<Student> students = new ArrayList<Student>();
+        ArrayList<Subject> subjects = new ArrayList<Subject>();
+
+        for (Entity std: em.searchByGrade(grade)) {
+            students.add((Student) std);
+        }
+        for (Entity sbj:em.entityList(new Subject())) {
+            subjects.add((Subject) sbj);
+        }
+
         int i = 1;
 
         if(students.isEmpty() || subjects.isEmpty()){
